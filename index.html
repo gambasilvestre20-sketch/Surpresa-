@@ -3,99 +3,591 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Uma surpresa 🐈</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090711">
+  <meta name="description" content="Galeria de artes de Rhuan — desenhos, criações digitais e projetos autorais.">
+  <title>RHUAN — Art Gallery</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #090711;
+      --panel: #12101d;
+      --panel-light: #191526;
+      --text: #f8f6ff;
+      --muted: #a7a0b8;
+      --purple: #a970ff;
+      --pink: #ff70d2;
+      --line: rgba(255,255,255,.1);
+      --radius: 22px;
     }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(118,54,190,.17), transparent 36rem),
+        radial-gradient(ellipse at 95% 42%, rgba(255,72,190,.07), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    #video {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 100vw;
-      height: 56.25vw;
-      max-width: 177.78vh;
-      max-height: 100vh;
-      aspect-ratio: 16 / 9;
-      transform: translate(-50%, -50%);
-      border: none;
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    img, video { display: block; max-width: 100%; }
+
+    .container { width: min(1120px, calc(100% - 40px)); margin: auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(9,7,17,.82);
+      backdrop-filter: blur(18px);
     }
 
-    #entrar {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
+    .nav {
+      min-height: 76px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: -.07em;
+    }
+
+    .logo span { color: var(--purple); }
+
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { color: var(--muted); font-size: .9rem; transition: color .2s; }
+    .nav-links a:hover { color: white; }
+
+    .button {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 18px;
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 24px;
+      gap: 10px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 13px 21px;
+      font-weight: 700;
+      font-size: .92rem;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, background .2s;
     }
 
-    button {
-      background: #fff;
-      color: #000;
-      border: none;
-      border-radius: 12px;
-      padding: 17px 25px;
-      font-size: 20px;
-      font-weight: bold;
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary {
+      color: #10091b;
+      background: linear-gradient(110deg, #c7a1ff, #ff9be3);
+      box-shadow: 0 8px 30px rgba(169,112,255,.2);
+    }
+
+    .button-primary:hover { box-shadow: 0 10px 36px rgba(169,112,255,.38); }
+
+    .button-secondary {
+      color: white;
+      background: rgba(255,255,255,.04);
+      border-color: var(--line);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 570px;
+      display: grid;
+      align-items: center;
+      padding: 100px 0 90px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      right: 5%;
+      top: 16%;
+      border-radius: 50%;
+      background: rgba(144,74,255,.15);
+      filter: blur(90px);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 790px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 12px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(169,112,255,.3);
+      border-radius: 999px;
+      background: rgba(169,112,255,.08);
+      color: #d8baff;
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #c49bff;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #a970ff;
+    }
+
+    h1, h2, h3 { font-family: "Space Grotesk", sans-serif; line-height: 1.1; }
+
+    h1 {
+      max-width: 850px;
+      font-size: clamp(3rem, 8vw, 6.4rem);
+      letter-spacing: -.075em;
+      font-weight: 700;
+    }
+
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(100deg, #c4a1ff 5%, #ff9bde 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-description {
+      max-width: 600px;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+    .hero-note { margin-top: 23px; color: #827a96; font-size: .82rem; }
+
+    .section { padding: 78px 0; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .section-kicker {
+      color: var(--purple);
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h2 { font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -.06em; }
+    .section-description { color: var(--muted); margin-top: 12px; max-width: 570px; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .art-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #171324, #0e0c16);
+      transition: transform .25s, border-color .25s;
+    }
+
+    .art-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(190,145,255,.48);
+    }
+
+    .art-image {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(174,115,255,.27), transparent 42%),
+        linear-gradient(135deg, #252039, #100d19);
+    }
+
+    .art-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .45s;
+    }
+
+    .art-card:hover .art-image img { transform: scale(1.04); }
+
+    .art-placeholder {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      text-align: center;
+      color: #bcb0d2;
+    }
+
+    .art-placeholder strong {
+      display: block;
+      color: #f0e6ff;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .art-placeholder span { font-size: .8rem; }
+
+    .art-info { padding: 19px; }
+    .art-info h3 { font-size: 1.12rem; letter-spacing: -.025em; }
+    .art-info p { margin-top: 7px; color: var(--muted); font-size: .88rem; }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 5px 9px;
+      border-radius: 7px;
+      color: #d6baff;
+      background: rgba(169,112,255,.1);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .video-panel {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 35px;
+      align-items: center;
+      padding: clamp(22px, 5vw, 48px);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: linear-gradient(120deg, rgba(169,112,255,.1), rgba(255,112,210,.04));
+    }
+
+    .video-frame {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      background: #050408;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+
+    .video-frame video { width: 100%; aspect-ratio: 16 / 9; background: #050408; }
+
+    .video-copy h2 { font-size: clamp(2rem, 4vw, 3rem); }
+    .video-copy p { margin: 16px 0 24px; color: var(--muted); }
+
+    .cta {
+      position: relative;
+      overflow: hidden;
+      padding: 65px 30px;
+      text-align: center;
+      border: 1px solid rgba(169,112,255,.28);
+      border-radius: 28px;
+      background:
+        radial-gradient(ellipse at 50% 120%, rgba(169,112,255,.25), transparent 60%),
+        #100d19;
+    }
+
+    .cta h2 { max-width: 750px; margin: 0 auto; }
+    .cta p { max-width: 610px; margin: 18px auto 26px; color: var(--muted); }
+    .cta .button { margin: 4px; }
+
+    footer { padding: 28px 0 36px; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; justify-content: space-between; gap: 16px; color: #817990; font-size: .82rem; }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal.open { display: flex; }
+    .modal-box { width: min(900px, 100%); position: relative; }
+    .modal iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 14px; background: #000; }
+    .modal-close {
+      display: block;
+      margin: 0 0 12px auto;
+      padding: 9px 15px;
+      color: white;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #1a1624;
       cursor: pointer;
     }
 
-    p {
-      color: #bbb;
-      font-size: 14px;
+    .reveal { animation: rise .7s ease both; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 800px) {
+      .nav-links { gap: 14px; }
+      .nav-links a:not(.button) { display: none; }
+      .hero { min-height: 500px; padding: 75px 0; }
+      .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .video-panel { grid-template-columns: 1fr; }
+      .video-copy { order: -1; }
+    }
+
+    @media (max-width: 520px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .nav { min-height: 66px; }
+      .logo { font-size: 1.15rem; }
+      .nav-links { gap: 8px; }
+      .nav-links .button { padding: 10px 13px; font-size: .78rem; }
+      .hero { min-height: 490px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .button { width: 100%; }
+      .section { padding: 55px 0; }
+      .section-heading { display: block; }
+      .gallery-grid { grid-template-columns: 1fr; gap: 14px; }
+      .art-image { aspect-ratio: 5 / 4; }
+      .cta { padding: 45px 20px; }
+      .footer-inner { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
     }
   </style>
 </head>
 
 <body>
-  <iframe
-    id="video"
-    title="Vídeo de gatos"
-    allow="autoplay; encrypted-media; picture-in-picture"
-    referrerpolicy="strict-origin-when-cross-origin"
-    src="about:blank">
-  </iframe>
+  <header class="topbar">
+    <nav class="nav container" aria-label="Navegação principal">
+      <a class="logo" href="#inicio">RH<span>.</span>ARTS</a>
+      <div class="nav-links">
+        <a href="#galeria">Galeria</a>
+        <a href="#videos">Vídeos</a>
+        <a class="button button-secondary" href="#sobre">Sobre o projeto ↗</a>
+      </div>
+    </nav>
+  </header>
 
-  <div id="entrar">
-    <h2>🐈 Preparado para a surpresa?</h2>
-    <button id="botao">Tocar para continuar</button>
-    <p>🔊 Aumente o volume!</p>
+  <main>
+    <section class="hero container" id="inicio">
+      <div class="hero-content reveal">
+        <div class="eyebrow"><span class="status-dot"></span> PORTFÓLIO CRIATIVO</div>
+        <h1>Ideias que ganham <span class="gradient-text">forma.</span></h1>
+        <p class="hero-description">
+          Bem-vindo ao meu universo criativo. Um espaço para reunir minhas artes,
+          meus desenhos no papel, minhas criações digitais e tudo aquilo que nasce da imaginação.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#galeria">Explorar a galeria <span>↗</span></a>
+          <button class="button button-secondary" id="openSurprise" type="button">Uma surpresa 🐈</button>
+        </div>
+        <p class="hero-note">ARTE TRADICIONAL · ARTE DIGITAL · CRIATIVIDADE SEM LIMITES</p>
+      </div>
+    </section>
+
+    <section class="section container" id="galeria">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">01 / Coleção</div>
+          <h2>Feito por mim. <span class="gradient-text">Do meu jeito.</span></h2>
+          <p class="section-description">
+            Clique em uma arte para conferir em tamanho maior. Novas criações podem aparecer por aqui a qualquer momento.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+        <!-- Para adicionar uma arte, copie um cartão e troque o título, a descrição e o arquivo. -->
+        <article class="art-card">
+          <a class="art-open" href="imagens/arte-01.jpg" aria-label="Abrir Arte 01 em tamanho maior">
+            <div class="art-image">
+              <img src="imagens/arte-01.jpg" alt="Arte tradicional número 1" loading="lazy">
+              <div class="art-placeholder"><div><strong>Sua próxima obra</strong><span>Adicione imagens na pasta imagens</span></div></div>
+            </div>
+          </a>
+          <div class="art-info"><span class="tag">Tradicional</span><h3>Traços no papel</h3><p>Uma criação feita à mão, detalhe por detalhe.</p></div>
+        </article>
+
+        <article class="art-card">
+          <a class="art-open" href="imagens/arte-02.jpg" aria-label="Abrir Arte 02 em tamanho maior">
+            <div class="art-image">
+              <img src="imagens/arte-02.jpg" alt="Arte tradicional número 2" loading="lazy">
+              <div class="art-placeholder"><div><strong>Seu próximo desenho</strong><span>Adicione imagens na pasta imagens</span></div></div>
+            </div>
+          </a>
+          <div class="art-info"><span class="tag">Desenho</span><h3>Estudos e esboços</h3><p>Ideias que começam com um simples traço.</p></div>
+        </article>
+
+        <article class="art-card">
+          <a class="art-open" href="imagens/arte-03.jpg" aria-label="Abrir Arte 03 em tamanho maior">
+            <div class="art-image">
+              <img src="imagens/arte-03.jpg" alt="Arte número 3" loading="lazy">
+              <div class="art-placeholder"><div><strong>Arte em construção</strong><span>Adicione imagens na pasta imagens</span></div></div>
+            </div>
+          </a>
+          <div class="art-info"><span class="tag">Experimental</span><h3>Novas ideias</h3><p>Testando estilos, formas e possibilidades.</p></div>
+        </article>
+
+        <article class="art-card">
+          <a class="art-open" href="imagens/arte-04.jpg" aria-label="Abrir Arte 04 em tamanho maior">
+            <div class="art-image">
+              <img src="imagens/arte-04.jpg" alt="Arte número 4" loading="lazy">
+              <div class="art-placeholder"><div><strong>Criação original</strong><span>Adicione imagens na pasta imagens</span></div></div>
+            </div>
+          </a>
+          <div class="art-info"><span class="tag">Original</span><h3>Meu universo</h3><p>Personagens e conceitos saídos da imaginação.</p></div>
+        </article>
+
+        <article class="art-card">
+          <a class="art-open" href="imagens/arte-05.jpg" aria-label="Abrir Arte 05 em tamanho maior">
+            <div class="art-image">
+              <img src="imagens/arte-05.jpg" alt="Arte número 5" loading="lazy">
+              <div class="art-placeholder"><div><strong>Arte digital</strong><span>Adicione imagens na pasta imagens</span></div></div>
+            </div>
+          </a>
+          <div class="art-info"><span class="tag">Digital</span><h3>Pixels e criatividade</h3><p>Criações feitas na tela e no mundo digital.</p></div>
+        </article>
+
+        <article class="art-card">
+          <a class="art-open" href="imagens/arte-06.jpg" aria-label="Abrir Arte 06 em tamanho maior">
+            <div class="art-image">
+              <img src="imagens/arte-06.jpg" alt="Arte número 6" loading="lazy">
+              <div class="art-placeholder"><div><strong>Mais está por vir</strong><span>Adicione imagens na pasta imagens</span></div></div>
+            </div>
+          </a>
+          <div class="art-info"><span class="tag">Em destaque</span><h3>Próxima criação</h3><p>Este espaço está pronto para receber sua próxima obra.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="videos">
+      <div class="video-panel">
+        <div class="video-copy">
+          <div class="section-kicker">02 / Em movimento</div>
+          <h2>Arte também é <span class="gradient-text">movimento.</span></h2>
+          <p>
+            Vídeos, processos criativos, animações e outros conteúdos.
+            O player abaixo aceita arquivos MP4 adicionados ao seu repositório.
+          </p>
+          <a class="button button-secondary" href="#galeria">Voltar às artes ↑</a>
+        </div>
+        <div class="video-frame">
+          <video controls playsinline preload="metadata" poster="imagens/capa-video.jpg">
+            <source src="videos/meu-video.mp4" type="video/mp4">
+            Seu navegador não conseguiu reproduzir este vídeo.
+            <a href="videos/meu-video.mp4">Tente abrir o MP4 diretamente.</a>
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="sobre">
+      <div class="cta">
+        <div class="section-kicker">03 / A coleção completa</div>
+        <h2>Clique aqui para ver toda a <span class="gradient-text">galeria de Rhuan.</span></h2>
+        <p>
+          Todas as suas artes mais recentes feitas no papel e nas telas,
+          reunidas em um só lugar. Cada traço tem uma história — e essa história continua.
+        </p>
+        <a class="button button-primary" href="#galeria">ENTRAR NA GALERIA ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner container">
+      <a class="logo" href="#inicio">RH<span>.</span>ARTS</a>
+      <p>© <span id="year"></span> Rhuan · Feito com criatividade.</p>
+      <a href="#inicio">Voltar ao topo ↑</a>
+    </div>
+  </footer>
+
+  <!-- Janela da surpresa: mantém a ideia do vídeo original. -->
+  <div class="modal" id="surpriseModal" role="dialog" aria-modal="true" aria-label="Vídeo surpresa">
+    <div class="modal-box">
+      <button class="modal-close" id="closeSurprise" type="button">Fechar ✕</button>
+      <iframe
+        id="surpriseVideo"
+        title="Vídeo surpresa"
+        src="about:blank"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
   </div>
 
   <script>
-    const video = document.getElementById("video");
-    const entrar = document.getElementById("entrar");
-    const botao = document.getElementById("botao");
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    botao.addEventListener("click", () => {
-      video.src =
-        "https://www.youtube.com/embed/hvL1339luv0" +
-        "?autoplay=1&mute=0&controls=1" +
-        "&playsinline=1&rel=0";
-
-      entrar.remove();
+    // Mostra um espaço bonito quando a imagem ainda não foi adicionada.
+    document.querySelectorAll(".art-image img").forEach((img) => {
+      img.addEventListener("error", () => {
+        img.style.display = "none";
+        const placeholder = img.nextElementSibling;
+        if (placeholder) placeholder.style.display = "grid";
+      });
     });
-  </script>
-</body>
-</html>
 
+    // Abre imagens da galeria em uma nova aba.
+    document.querySelectorAll(".art-open").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const img = link.querySelector("img");
+        if (!img || img.style.display === "none" || !img.complete || img.naturalWidth === 0) {
+          event.preventDefault();
+          return;
+        }
+        event.preventDefault();
+        window.open(link.href, "_blank", "noopener");
+      });
+    });
+
+    // Vídeo surpresa do site original.
+    const modal = document.getElementById("surpriseModal");
+    const surpriseVideo = document.getElementById("surpriseVideo");
+
+    document.getElementById("openSurprise").addEventListener("click", () => {
+      surpriseVideo.src = "https://www.youtube.com/embed/hvL1339luv0?autoplay=1&mute=0&controls=1&playsinline=1&rel=0";
+      modal.classList.add("open");
+      document.getElementById("closeSurprise").focus();
+    });
+
+    function closeModal() {
+      modal.classList.remove("open");
+      surpriseVideo.src = "about:blank";
+    }
+
+    document.getElementById("closeSurprise").addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (event) =>
