@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uma surpresa 🐈</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      font-family: Arial, sans-serif;
+    }
+
+    #video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw;
+      min-width: 177.78vh;
+      min-height: 100vh;
+      transform: translate(-50%, -50%);
+      border: 0;
+    }
+
+    #entrar {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <iframe
+    id="video"
+    src="https://www.youtube.com/embed/hvL1339luv0?autoplay=1&mute=1&controls=0&loop=1&playlist=hvL1339luv0&playsinline=1&enablejsapi=1"
+    title="Vídeo de gatos"
+    allow="autoplay; encrypted-media; picture-in-picture"
+    referrerpolicy="strict-origin-when-cross-origin"
+  ></iframe>
+
+  <div id="entrar">Toque para continuar 🐈</div>
+
+  <script>
+    const video = document.getElementById("video");
+    const entrar = document.getElementById("entrar");
+
+    entrar.addEventListener("click", () => {
+      entrar.remove();
+
+      video.contentWindow.postMessage(
+        JSON.stringify({
+          event: "command",
+          func: "unMute",
+          args: []
+        }),
+        "https://www.youtube.com"
+      );
+
+      video.contentWindow.postMessage(
+        JSON.stringify({
+          event: "command",
+          func: "playVideo",
+          args: []
+        }),
+        "https://www.youtube.com"
+      );
+    });
+  </script>
+</body>
+</html>
