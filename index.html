@@ -3,7 +3,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Uma surpresa 🐈</title>
 
   <style>
@@ -16,8 +16,8 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden;
       background: #000;
+      overflow: hidden;
       font-family: Arial, sans-serif;
     }
 
@@ -27,10 +27,11 @@
       left: 50%;
       width: 100vw;
       height: 56.25vw;
-      min-width: 177.78vh;
-      min-height: 100vh;
+      max-width: 177.78vh;
+      max-height: 100vh;
+      aspect-ratio: 16 / 9;
       transform: translate(-50%, -50%);
-      border: 0;
+      border: none;
     }
 
     #entrar {
@@ -38,15 +39,30 @@
       inset: 0;
       z-index: 2;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 18px;
       background: #000;
       color: #fff;
-      font-size: 24px;
+      text-align: center;
+      padding: 24px;
+    }
+
+    button {
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      padding: 17px 25px;
+      font-size: 20px;
       font-weight: bold;
       cursor: pointer;
-      text-align: center;
-      padding: 20px;
+    }
+
+    p {
+      color: #bbb;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -54,39 +70,32 @@
 <body>
   <iframe
     id="video"
-    src="https://www.youtube.com/embed/hvL1339luv0?autoplay=1&mute=1&controls=0&loop=1&playlist=hvL1339luv0&playsinline=1&enablejsapi=1"
     title="Vídeo de gatos"
     allow="autoplay; encrypted-media; picture-in-picture"
     referrerpolicy="strict-origin-when-cross-origin"
-  ></iframe>
+    src="about:blank">
+  </iframe>
 
-  <div id="entrar">Toque para continuar 🐈</div>
+  <div id="entrar">
+    <h2>🐈 Preparado para a surpresa?</h2>
+    <button id="botao">Tocar para continuar</button>
+    <p>🔊 Aumente o volume!</p>
+  </div>
 
   <script>
     const video = document.getElementById("video");
     const entrar = document.getElementById("entrar");
+    const botao = document.getElementById("botao");
 
-    entrar.addEventListener("click", () => {
+    botao.addEventListener("click", () => {
+      video.src =
+        "https://www.youtube.com/embed/hvL1339luv0" +
+        "?autoplay=1&mute=0&controls=1" +
+        "&playsinline=1&rel=0";
+
       entrar.remove();
-
-      video.contentWindow.postMessage(
-        JSON.stringify({
-          event: "command",
-          func: "unMute",
-          args: []
-        }),
-        "https://www.youtube.com"
-      );
-
-      video.contentWindow.postMessage(
-        JSON.stringify({
-          event: "command",
-          func: "playVideo",
-          args: []
-        }),
-        "https://www.youtube.com"
-      );
     });
   </script>
 </body>
 </html>
+
